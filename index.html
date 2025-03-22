@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>孙金龙的个人网站</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 0 20px;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 40px;
+        }
+
+        .avatar-section {
+            margin: 0 auto 20px;
+            width: 140px;
+            height: 140px;
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .avatar-wrapper {
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #1c1c1e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 168px;
+            height: 168px;
+            pointer-events: none;
+        }
+
+        .name {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.2s forwards;
+        }
+
+        .title {
+            font-size: 20px;
+            color: #007AFF;
+            margin-bottom: 32px;
+            font-weight: 500;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.3s forwards;
+        }
+
+        .experience-section {
+            background: #1c1c1e;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .experience-title {
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .experience-item {
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .experience-date {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            min-width: 120px;
+        }
+
+        .experience-company {
+            flex: 1;
+            padding-left: 16px;
+        }
+
+        .highlights-section {
+            background: #1c1c1e;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: left;
+            flex: 1;
+            min-width: 0;
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.6s forwards;
+        }
+
+        /* 添加新的布局样式 */
+        .highlights-container {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 16px;
+            max-width: 1800px;
+        }
+
+        .highlights-title {
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .highlights-title:before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 16px;
+            background: #007AFF;
+            margin-right: 8px;
+            border-radius: 2px;
+        }
+
+        .highlight-item {
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            padding-left: 12px;
+            position: relative;
+            line-height: 1.5;
+            transform: none !important;
+            transition: none !important;
+        }
+
+        .highlight-item:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 4px;
+            height: 4px;
+            background: #007AFF;
+            border-radius: 50%;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 0 0 36px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.4s forwards;
+        }
+
+        .social-link {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: #1c1c1e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-link:hover {
+            background: #2c2c2e;
+            transform: translateY(-2px);
+        }
+
+        .social-link i {
+            font-size: 20px;
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #1c1c1e;
+            padding: 20px;
+            border-radius: 16px;
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            margin: auto;
+        }
+
+        .modal img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 0;
+            display: block;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 8px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .close-modal:hover {
+            opacity: 1;
+        }
+
+        #logTitle {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            padding-right: 40px;
+        }
+
+        #logDate {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        #logContent {
+            line-height: 1.8;
+        }
+
+        #logContent h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: #007AFF;
+        }
+
+        #logContent p {
+            margin-bottom: 15px;
+        }
+
+        #logContent ul {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+
+        #logContent li {
+            margin-bottom: 8px;
+        }
+
+        /* 亮色主题弹窗样式 */
+        body.light-theme .modal-content {
+            background: #ffffff;
+            color: #000;
+        }
+
+        body.light-theme .close-modal {
+            color: #000;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .close-modal:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 640px) {
+            body {
+                padding: 0 16px;
+            }
+            
+            .container {
+                max-width: 680px;
+                padding-top: 30px;
+            }
+
+            .experience-item {
+                flex-direction: column;
+            }
+
+            .experience-date {
+                margin-bottom: 4px;
+            }
+
+            .experience-company {
+                padding-left: 0;
+            }
+
+            .highlights-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .modal {
+                padding: 10px;
+            }
+
+            .modal-content {
+                padding: 20px;
+                margin: 20px auto;
+            }
+
+            #logTitle {
+                font-size: 20px;
+            }
+
+            #logContent h2 {
+                font-size: 18px;
+            }
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin: 0 0 30px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.5s forwards;
+        }
+
+        .action-button {
+            padding: 12px 24px;
+            border-radius: 8px;
+            background: #007AFF;
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-button:hover {
+            background: #0066CC;
+            transform: translateY(-2px);
+        }
+
+        .action-button i {
+            font-size: 16px;
+        }
+
+        /* 修改主题切换按钮样式 */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: #1c1c1e;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .theme-toggle:hover {
+            background: #2c2c2e;
+            transform: translateY(-2px);
+        }
+
+        .theme-toggle i {
+            font-size: 20px;
+        }
+
+        /* 亮色主题样式 */
+        body.light-theme {
+            background-color: #f5f5f7;
+            color: #000;
+        }
+
+        body.light-theme .highlights-section {
+            background: #ffffff;
+        }
+
+        body.light-theme .social-link {
+            background: #ffffff;
+            color: #000;
+        }
+
+        body.light-theme .social-link:hover {
+            background: #f0f0f0;
+        }
+
+        body.light-theme .name {
+            color: #000;
+        }
+
+        body.light-theme .highlights-title {
+            color: #000;
+        }
+
+        body.light-theme .highlight-item {
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        body.light-theme .theme-toggle {
+            background: #ffffff;
+            color: #000;
+        }
+
+        body.light-theme .theme-toggle:hover {
+            background: #f0f0f0;
+        }
+
+        /* 修改日志项样式 */
+        .log-item {
+            background: #1c1c1e;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+            transform: scale(1);
+        }
+
+        .log-item:hover {
+            background: #2c2c2e;
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .log-item:hover {
+            background: #e5e5e7;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .log-info {
+            flex: 1;
+        }
+
+        .log-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .log-date {
+            font-size: 12px;
+            color: #007AFF;
+        }
+
+        .log-icon {
+            margin-left: 16px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 122, 255, 0.1);
+            border-radius: 8px;
+            color: #007AFF;
+        }
+
+        body.light-theme .log-item {
+            background: #ffffff;
+        }
+
+        body.light-theme .log-title {
+            color: #000;
+        }
+
+        /* 修改透明卡片样式 */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            margin: 20px;
+            transition: transform 0.5s ease-out;
+            will-change: transform;
+        }
+
+        body.light-theme .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* 添加入场动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 为日志项添加递增延迟 */
+        #logs-container .log-item:nth-child(1) { animation-delay: 0.7s; }
+        #logs-container .log-item:nth-child(2) { animation-delay: 0.8s; }
+        #logs-container .log-item:nth-child(3) { animation-delay: 0.9s; }
+        #logs-container .log-item:nth-child(4) { animation-delay: 1.0s; }
+        #logs-container .log-item:nth-child(5) { animation-delay: 1.1s; }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">
+        <i class="fas fa-moon"></i>
+    </button>
+    <div class="container">
+        <div class="glass-card">
+            <div class="avatar-section">
+                <div class="avatar-wrapper">
+                    <img src="头像.jpg" alt="孙金龙" class="avatar-image">
+                </div>
+                <img src="头像框.png" alt="头像框" class="avatar-frame">
+            </div>
+            
+            <h1 class="name">孙金龙</h1>
+            <div class="title">买量视频设计师 / AI独立开发者</div>
+
+            <div class="social-links">
+                <div class="social-link" title="微信" onclick="showQRCode('wechat')">
+                    <i class="fab fa-weixin"></i>
+                </div>
+                <div class="social-link" title="QQ" onclick="showQRCode('qq')">
+                    <i class="fab fa-qq"></i>
+                </div>
+                <a href="https://space.bilibili.com/396595883?spm_id_from=333.337.0.0" target="_blank" class="social-link" title="哔哩哔哩">
+                    <i class="fab fa-bilibili"></i>
+                </a>
+                <div class="social-link" title="抖音" onclick="showMessage('抖音号：无链接')">
+                    <i class="fab fa-tiktok"></i>
+                </div>
+                <a href="https://www.youtube.com/@孙金龙-h7t" target="_blank" class="social-link" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+
+            <div class="action-buttons">
+                <a href="孙金龙简历.pdf" download="孙金龙简历.pdf" class="action-button">
+                    <i class="fas fa-download"></i>
+                    下载简历
+                </a>
+                <a href="works.html" class="action-button">
+                    <i class="fas fa-play-circle"></i>
+                    查看作品
+                </a>
+            </div>
+
+            <div class="highlights-container">
+                <div class="highlights-section">
+                    <h2 class="highlights-title">买量视频项目经验</h2>
+                    <div class="highlight-item">
+                        参与 Funplus 公司旗下的《火枪纪元 Guns of Glory》、《阿瓦隆之王 King of Avalon》、《Z-Day》、《State of Survival》系列等游戏买量视频的制作
+                    </div>
+                    <div class="highlight-item">
+                        参与 tap4fun 公司旗下的《胜利之吻 Kiss of War》游戏的买量视频的制作
+                    </div>
+                    <div class="highlight-item">
+                        参与博乐科技旗下的《Cash Frenzy Casino》游戏买量视频制作
+                    </div>
+                    <div class="highlight-item">
+                        参与游族旗下的《infinitykingdom》游戏买量视频制作
+                    </div>
+                    <div class="highlight-item">
+                        参与巴别时代所有孵化项目的预演制作和游戏Demo制作
+                    </div>
+                </div>
+
+                <div class="highlights-section">
+                    <h2 class="highlights-title">AI 独立开发经验</h2>
+                    <div class="highlight-item">
+                        开发并维护多个基于 ChatGPT API 的智能对话应用，服务于教育和创意领域
+                    </div>
+                    <div class="highlight-item">
+                        设计并实现基于 Stable Diffusion 的 AI 艺术创作工具，用于游戏素材生成
+                    </div>
+                    <div class="highlight-item">
+                        开发智能视频剪辑助手，提升视频制作效率
+                    </div>
+                    <div class="highlight-item">
+                        研究并实践 AI 提示工程（Prompt Engineering），优化 AI 模型输出效果
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlights-section" style="margin-top: 40px; max-width: 1800px;">
+                <h2 class="highlights-title">学习日志</h2>
+                <div id="logs-container">
+                    <!-- 日志内容将通过 JavaScript 动态加载 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加二维码弹窗 -->
+    <div id="qrModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <img id="qrImage" src="" alt="二维码">
+        </div>
+    </div>
+
+    <script>
+        // 保留主题切换功能
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.querySelector('.theme-toggle i');
+            
+            if (body.classList.contains('light-theme')) {
+                body.classList.remove('light-theme');
+                themeIcon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.add('light-theme');
+                themeIcon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // 页面加载时检查主题
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.querySelector('.theme-toggle i');
+            
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                themeIcon.className = 'fas fa-sun';
+            }
+        });
+
+        // 保留二维码和消息显示功能
+        function showQRCode(type) {
+            const modal = document.getElementById('qrModal');
+            const qrImage = document.getElementById('qrImage');
+            
+            // 预加载图片
+            const img = new Image();
+            if (type === 'wechat') {
+                img.src = '微信二维码.jpg';
+            } else if (type === 'qq') {
+                img.src = 'QQ二维码.jpg';
+            }
+            
+            img.onload = function() {
+                qrImage.src = img.src;
+                modal.style.display = 'flex';
+            };
+            
+            img.onerror = function() {
+                console.error('二维码图片加载失败');
+                alert('二维码加载失败，请稍后重试');
+            };
+        }
+
+        function showMessage(message) {
+            alert(message);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('qrModal');
+            modal.style.display = 'none';
+        }
+
+        // 点击弹窗外部关闭弹窗
+        window.onclick = function(event) {
+            const modal = document.getElementById('qrModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // 修改加载日志数据的函数
+        async function loadLogs() {
+            const container = document.getElementById('logs-container');
+            
+            try {
+                const response = await fetch('docs/docs.json');
+                const data = await response.json();
+                const links = data.links;
+                
+                // 按日期倒序排序
+                links.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                if (links.length === 0) {
+                    container.innerHTML = '<div style="color: #666; text-align: center; padding: 20px;">暂无学习日志</div>';
+                    return;
+                }
+                
+                container.innerHTML = ''; // 清空容器
+                
+                links.forEach(link => {
+                    const logElement = document.createElement('a');
+                    logElement.className = 'log-item';
+                    logElement.href = link.url;
+                    logElement.target = '_blank';
+                    
+                    logElement.innerHTML = `
+                        <div class="log-info">
+                            <div class="log-title">${link.name}</div>
+                            <div class="log-date">${link.date}</div>
+                        </div>
+                        <div class="log-icon">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                    `;
+                    
+                    container.appendChild(logElement);
+                });
+            } catch (error) {
+                console.error('Error loading links:', error);
+                container.innerHTML = 
+                    '<div style="color: #666; text-align: center; padding: 20px;">加载链接列表失败，请刷新页面重试。</div>';
+            }
+        }
+
+        // 页面加载时初始化日志
+        document.addEventListener('DOMContentLoaded', loadLogs);
+
+        // 修改鼠标跟随效果
+        document.addEventListener('mousemove', function(e) {
+            const card = document.querySelector('.glass-card');
+            const rect = card.getBoundingClientRect();
+            const cardCenterX = rect.left + rect.width / 2;
+            const cardCenterY = rect.top + rect.height / 2;
+            
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            
+            // 计算移动距离，减小移动幅度
+            const moveX = (mouseX - cardCenterX) * 0.005;
+            const moveY = (mouseY - cardCenterY) * 0.005;
+            
+            requestAnimationFrame(() => {
+                card.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+        });
+
+        // 鼠标离开时重置效果
+        document.addEventListener('mouseleave', function() {
+            const card = document.querySelector('.glass-card');
+            card.style.transform = 'translate(0, 0)';
+        });
+    </script>
+</body>
+</html> 
