@@ -455,221 +455,210 @@
             });
         }
 
-        // 获取视频文件列表并展示
-        async function loadVideos() {
-            const videoContainer = document.getElementById('videoContainer');
-            
-            const videos = [
-                { file: 'MP4/升级战斗.mp4', title: '升级战斗' },
-                { file: 'MP4/占领.mp4', title: '占领' },
-                { file: 'MP4/大洪水.mp4', title: '大洪水' },
-                { file: 'MP4/小人战斗.mp4', title: '小人战斗' },
-                { file: 'MP4/小兵乱斗.mp4', title: '小兵乱斗' },
-                { file: 'MP4/小兵乱斗改版.mp4', title: '小兵乱斗改版' },
-                { file: 'MP4/建造防御进攻.mp4', title: '建造防御进攻' },
-                { file: 'MP4/收集建造战斗.mp4', title: '收集建造战斗' }
-            ];
+        // 配置对象
+        const config = {
+            cdnBase: 'https://your-worker.your-subdomain.workers.dev', // 替换为你的 Worker URL
+            thumbnailBase: '/thumbnails' // 缩略图目录
+        };
 
-            // 按文件名倒序排序
-            videos.sort((a, b) => {
-                return b.file.localeCompare(a.file);
+        // 视频数据
+        const videoData = [
+            {
+                name: 'SS_超越死亡.mp4',
+                title: 'SS - 超越死亡',
+                description: '点击播放视频'
+            },
+            {
+                name: 'SS_超级大Boos.mp4',
+                title: 'SS - 超级大Boss',
+                description: '点击播放视频'
+            },
+            {
+                name: 'SS（逃脱.mp4',
+                title: 'SS - 逃脱',
+                description: '点击播放视频'
+            },
+            {
+                name: 'SS(卡地铁).mp4',
+                title: 'SS - 卡地铁',
+                description: '点击播放视频'
+            },
+            {
+                name: 'SS(狙击掩护).mp4',
+                title: 'SS - 狙击掩护',
+                description: '点击播放视频'
+            },
+            {
+                name: 'SS(逛超市.mp4',
+                title: 'SS - 逛超市',
+                description: '点击播放视频'
+            },
+            {
+                name: 'SS(敌对势力).mp4',
+                title: 'SS - 敌对势力',
+                description: '点击播放视频'
+            },
+            {
+                name: 'NM(修理).mp4',
+                title: 'NM - 修理',
+                description: '点击播放视频'
+            },
+            {
+                name: 'GOG_大富翁棋盘.mp4',
+                title: 'GOG - 大富翁棋盘',
+                description: '点击播放视频'
+            },
+            {
+                name: 'GOG（扔炸弹.mp4',
+                title: 'GOG - 扔炸弹',
+                description: '点击播放视频'
+            },
+            {
+                name: 'GOG（登岛.mp4',
+                title: 'GOG - 登岛',
+                description: '点击播放视频'
+            },
+            {
+                name: '割草塔防干着急.mp4',
+                title: '割草塔防',
+                description: '点击播放视频'
+            },
+            {
+                name: '小兵乱斗.mp4',
+                title: '小兵乱斗',
+                description: '点击播放视频'
+            },
+            {
+                name: '王后复刻.mp4',
+                title: '王后复刻',
+                description: '点击播放视频'
+            },
+            {
+                name: '三国SLG_弓箭发射.mp4',
+                title: '三国SLG - 弓箭发射',
+                description: '点击播放视频'
+            },
+            {
+                name: '圆台展示.mp4',
+                title: '圆台展示',
+                description: '点击播放视频'
+            },
+            {
+                name: '画图战斗.mp4',
+                title: '画图战斗',
+                description: '点击播放视频'
+            },
+            {
+                name: '多木桶.mp4',
+                title: '多木桶',
+                description: '点击播放视频'
+            },
+            {
+                name: '狼人健身升级逆袭.mp4',
+                title: '狼人健身升级逆袭',
+                description: '点击播放视频'
+            }
+        ];
+
+        // 初始化页面
+        function initializePage() {
+            const worksGrid = document.querySelector('.works-grid');
+            
+            videoData.forEach(video => {
+                const workItem = createWorkItem(video);
+                worksGrid.appendChild(workItem);
             });
 
-            for (const video of videos) {
-                const workItem = document.createElement('div');
-                workItem.className = 'work-item';
-                
-                const videoWrapper = document.createElement('div');
-                videoWrapper.className = 'work-video-container paused';
-                
-                const videoElement = document.createElement('video');
-                videoElement.className = 'work-video';
-                videoElement.preload = 'metadata';
-                videoElement.innerHTML = `
-                    <source src="${video.file}" type="video/mp4">
-                    您的浏览器不支持视频播放。
-                `;
-
-                // 添加自定义播放按钮
-                const playButton = document.createElement('div');
-                playButton.className = 'play-button';
-                playButton.innerHTML = '<i class="fas fa-play"></i>';
-
-                // 添加自定义全屏按钮
-                const fullscreenButton = document.createElement('div');
-                fullscreenButton.className = 'fullscreen-button';
-                fullscreenButton.innerHTML = '<i class="fas fa-expand"></i>';
-
-                // 添加进度条容器
-                const progressContainer = document.createElement('div');
-                progressContainer.className = 'progress-container';
-                
-                // 添加进度条
-                const progressBar = document.createElement('div');
-                progressBar.className = 'video-progress';
-                progressBar.innerHTML = '<div class="progress-bar"><div class="progress-handle"></div></div>';
-                
-                // 添加时间显示
-                const timeDisplay = document.createElement('div');
-                timeDisplay.className = 'time-display';
-                timeDisplay.textContent = '0:00 / 0:00';
-                
-                progressContainer.appendChild(progressBar);
-                progressContainer.appendChild(timeDisplay);
-                
-                videoWrapper.appendChild(videoElement);
-                videoWrapper.appendChild(playButton);
-                videoWrapper.appendChild(fullscreenButton);
-                videoWrapper.appendChild(progressContainer);
-
-                // 格式化时间函数
-                function formatTime(seconds) {
-                    const minutes = Math.floor(seconds / 60);
-                    seconds = Math.floor(seconds % 60);
-                    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-                }
-
-                // 进度条拖动相关变量
-                let isDragging = false;
-                let wasPaused = true;
-
-                // 更新进度条和时间显示
-                videoElement.addEventListener('timeupdate', () => {
-                    if (!isDragging) {
-                        const progress = (videoElement.currentTime / videoElement.duration) * 100;
-                        progressBar.querySelector('.progress-bar').style.width = `${progress}%`;
-                        timeDisplay.textContent = `${formatTime(videoElement.currentTime)} / ${formatTime(videoElement.duration)}`;
-                    }
-                });
-
-                // 进度条点击和拖动事件
-                function updateVideoProgress(e) {
-                    const rect = progressBar.getBoundingClientRect();
-                    let pos = (e.clientX - rect.left) / rect.width;
-                    pos = Math.max(0, Math.min(1, pos));
-                    progressBar.querySelector('.progress-bar').style.width = `${pos * 100}%`;
-                    // 实时更新视频时间和画面
-                    videoElement.currentTime = pos * videoElement.duration;
-                    return pos;
-                }
-
-                progressBar.addEventListener('mousedown', (e) => {
-                    isDragging = true;
-                    updateVideoProgress(e);
-                    e.stopPropagation();
-                });
-
-                document.addEventListener('mousemove', (e) => {
-                    if (isDragging) {
-                        updateVideoProgress(e);
-                        e.preventDefault();
-                    }
-                });
-
-                document.addEventListener('mouseup', (e) => {
-                    if (isDragging) {
-                        const pos = updateVideoProgress(e);
-                        if (!videoElement.paused) {
-                            videoElement.play();
-                        }
-                        isDragging = false;
-                    }
-                });
-
-                // 添加进度条悬停预览
-                progressBar.addEventListener('mousemove', (e) => {
-                    if (!isDragging) {
-                        const rect = progressBar.getBoundingClientRect();
-                        const pos = (e.clientX - rect.left) / rect.width;
-                        const previewTime = pos * videoElement.duration;
-                        timeDisplay.textContent = `${formatTime(previewTime)} / ${formatTime(videoElement.duration)}`;
-                    }
-                });
-
-                progressBar.addEventListener('mouseleave', () => {
-                    if (!isDragging) {
-                        timeDisplay.textContent = `${formatTime(videoElement.currentTime)} / ${formatTime(videoElement.duration)}`;
-                    }
-                });
-
-                // 防止拖动时选中文本
-                progressBar.addEventListener('dragstart', (e) => {
-                    e.preventDefault();
-                });
-
-                // 添加播放按钮点击事件
-                playButton.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    if (videoElement.paused) {
-                        videoElement.play();
-                    } else {
-                        videoElement.pause();
-                    }
-                });
-
-                // 全屏按钮点击事件
-                fullscreenButton.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    if (document.fullscreenElement) {
-                        document.exitFullscreen();
-                        fullscreenButton.innerHTML = '<i class="fas fa-expand"></i>';
-                        progressContainer.classList.remove('fullscreen');
-                    } else {
-                        videoWrapper.requestFullscreen();
-                        fullscreenButton.innerHTML = '<i class="fas fa-compress"></i>';
-                        progressContainer.classList.add('fullscreen');
-                    }
-                });
-
-                // 监听全屏状态变化
-                document.addEventListener('fullscreenchange', () => {
-                    if (!document.fullscreenElement) {
-                        fullscreenButton.innerHTML = '<i class="fas fa-expand"></i>';
-                        progressContainer.classList.remove('fullscreen');
-                    }
-                });
-
-                // 添加视频容器点击事件
-                videoWrapper.addEventListener('click', (e) => {
-                    if (e.target === videoWrapper) {
-                        if (videoElement.paused) {
-                            videoElement.play();
-                        } else {
-                            videoElement.pause();
-                        }
-                    }
-                });
-
-                videoElement.addEventListener('play', () => {
-                    handleVideoPlay(videoElement);
-                    playButton.innerHTML = '<i class="fas fa-pause"></i>';
-                });
-
-                videoElement.addEventListener('pause', () => {
-                    playButton.innerHTML = '<i class="fas fa-play"></i>';
-                    videoWrapper.classList.add('paused');
-                });
-
-                videoElement.addEventListener('loadedmetadata', () => {
-                    if (videoElement.videoHeight > videoElement.videoWidth) {
-                        videoElement.classList.add('vertical-video');
-                    }
-                });
-
-                const infoDiv = document.createElement('div');
-                infoDiv.className = 'work-info';
-                infoDiv.innerHTML = `
-                    <h3 class="work-title">${video.title}</h3>
-                `;
-
-                workItem.appendChild(videoWrapper);
-                workItem.appendChild(infoDiv);
-                videoContainer.appendChild(workItem);
-            }
+            initializeVideoControls();
         }
 
-        // 页面加载完成后加载视频
-        window.addEventListener('load', loadVideos);
+        // 创建视频项
+        function createWorkItem(video) {
+            const workItem = document.createElement('div');
+            workItem.className = 'work-item';
+            
+            workItem.innerHTML = `
+                <div class="work-video-container">
+                    <video class="work-video" 
+                           src="${config.cdnBase}/${video.name}"
+                           poster="${config.thumbnailBase}/${video.name.replace('.mp4', '.jpg')}"
+                           preload="metadata">
+                    </video>
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="fullscreen-button">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                </div>
+                <div class="work-info">
+                    <div class="work-title">${video.title}</div>
+                    <div class="work-description">${video.description}</div>
+                </div>
+            `;
+            
+            return workItem;
+        }
+
+        // 初始化视频控制
+        function initializeVideoControls() {
+            document.querySelectorAll('.work-video-container').forEach(container => {
+                const video = container.querySelector('video');
+                const playButton = container.querySelector('.play-button');
+                const fullscreenButton = container.querySelector('.fullscreen-button');
+
+                // 播放/暂停控制
+                playButton.addEventListener('click', () => {
+                    if (video.paused) {
+                        video.play();
+                        playButton.innerHTML = '<i class="fas fa-pause"></i>';
+                    } else {
+                        video.pause();
+                        playButton.innerHTML = '<i class="fas fa-play"></i>';
+                    }
+                });
+
+                // 视频播放状态变化
+                video.addEventListener('play', () => {
+                    playButton.innerHTML = '<i class="fas fa-pause"></i>';
+                    container.classList.remove('paused');
+                });
+
+                video.addEventListener('pause', () => {
+                    playButton.innerHTML = '<i class="fas fa-play"></i>';
+                    container.classList.add('paused');
+                });
+
+                // 全屏控制
+                fullscreenButton.addEventListener('click', () => {
+                    if (!document.fullscreenElement) {
+                        if (container.requestFullscreen) {
+                            container.requestFullscreen();
+                        } else if (container.webkitRequestFullscreen) {
+                            container.webkitRequestFullscreen();
+                        }
+                    } else {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        } else if (document.webkitExitFullscreen) {
+                            document.webkitExitFullscreen();
+                        }
+                    }
+                });
+
+                // 检测视频方向并调整样式
+                video.addEventListener('loadedmetadata', () => {
+                    if (video.videoHeight > video.videoWidth) {
+                        video.classList.add('vertical-video');
+                    } else {
+                        video.classList.remove('vertical-video');
+                    }
+                });
+            });
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', initializePage);
     </script>
 </body>
 </html> 
