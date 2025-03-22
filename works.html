@@ -457,52 +457,12 @@
 
         // 配置对象
         const config = {
-            cdnBase: 'https://your-worker.your-subdomain.workers.dev', // 替换为你的 Worker URL
+            cdnBase: 'https://video-cdn.jinlongsun60.workers.dev', // Worker URL
             thumbnailBase: '/thumbnails' // 缩略图目录
         };
 
         // 视频数据
         const videoData = [
-            {
-                name: 'SS_超越死亡.mp4',
-                title: 'SS - 超越死亡',
-                description: '点击播放视频'
-            },
-            {
-                name: 'SS_超级大Boos.mp4',
-                title: 'SS - 超级大Boss',
-                description: '点击播放视频'
-            },
-            {
-                name: 'SS（逃脱.mp4',
-                title: 'SS - 逃脱',
-                description: '点击播放视频'
-            },
-            {
-                name: 'SS(卡地铁).mp4',
-                title: 'SS - 卡地铁',
-                description: '点击播放视频'
-            },
-            {
-                name: 'SS(狙击掩护).mp4',
-                title: 'SS - 狙击掩护',
-                description: '点击播放视频'
-            },
-            {
-                name: 'SS(逛超市.mp4',
-                title: 'SS - 逛超市',
-                description: '点击播放视频'
-            },
-            {
-                name: 'SS(敌对势力).mp4',
-                title: 'SS - 敌对势力',
-                description: '点击播放视频'
-            },
-            {
-                name: 'NM(修理).mp4',
-                title: 'NM - 修理',
-                description: '点击播放视频'
-            },
             {
                 name: 'GOG_大富翁棋盘.mp4',
                 title: 'GOG - 大富翁棋盘',
@@ -519,18 +479,38 @@
                 description: '点击播放视频'
             },
             {
-                name: '割草塔防干着急.mp4',
-                title: '割草塔防',
+                name: 'NM(修理).mp4',
+                title: 'NM - 修理',
                 description: '点击播放视频'
             },
             {
-                name: '小兵乱斗.mp4',
-                title: '小兵乱斗',
+                name: 'SS(卡地铁).mp4',
+                title: 'SS - 卡地铁',
                 description: '点击播放视频'
             },
             {
-                name: '王后复刻.mp4',
-                title: '王后复刻',
+                name: 'SS(敌对势力).mp4',
+                title: 'SS - 敌对势力',
+                description: '点击播放视频'
+            },
+            {
+                name: 'SS(逛超市.mp4',
+                title: 'SS - 逛超市',
+                description: '点击播放视频'
+            },
+            {
+                name: 'SS_超级大Boos.mp4',
+                title: 'SS - 超级大Boss',
+                description: '点击播放视频'
+            },
+            {
+                name: 'SS_超越死亡.mp4',
+                title: 'SS - 超越死亡',
+                description: '点击播放视频'
+            },
+            {
+                name: 'SS（逃脱.mp4',
+                title: 'SS - 逃脱',
                 description: '点击播放视频'
             },
             {
@@ -539,23 +519,18 @@
                 description: '点击播放视频'
             },
             {
+                name: '割草塔防干着急.mp4',
+                title: '割草塔防',
+                description: '点击播放视频'
+            },
+            {
                 name: '圆台展示.mp4',
                 title: '圆台展示',
                 description: '点击播放视频'
             },
             {
-                name: '画图战斗.mp4',
-                title: '画图战斗',
-                description: '点击播放视频'
-            },
-            {
                 name: '多木桶.mp4',
                 title: '多木桶',
-                description: '点击播放视频'
-            },
-            {
-                name: '狼人健身升级逆袭.mp4',
-                title: '狼人健身升级逆袭',
                 description: '点击播放视频'
             }
         ];
@@ -581,7 +556,6 @@
                 <div class="work-video-container">
                     <video class="work-video" 
                            src="${config.cdnBase}/${video.name}"
-                           poster="${config.thumbnailBase}/${video.name.replace('.mp4', '.jpg')}"
                            preload="metadata">
                     </video>
                     <div class="play-button">
