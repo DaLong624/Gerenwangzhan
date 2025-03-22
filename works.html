@@ -457,55 +457,83 @@
 
         // 配置对象
         const config = {
-            cdnBase: 'https://video-cdn.jinlongsun60.workers.dev'
+            cdnBase: 'https://video-cdn.jinlongsun60.workers.dev',
+            thumbnailBase: '/thumbnails'  // 添加缩略图基础路径
         };
 
         // 视频数据
         const videoData = [
             {
-                name: 'SS_超级大Boos.mp4',
+                name: 'Mp4/超级死亡.mp4',
+                title: 'SS - 超级死亡',
+                description: '点击播放视频',
+                thumbnail: '超级死亡.jpg'
+            },
+            {
+                name: 'Mp4/超级大Boss.mp4',
                 title: 'SS - 超级大Boss',
-                description: '点击播放视频'
+                description: '点击播放视频',
+                thumbnail: '超级大Boss.jpg'
             },
             {
-                name: 'SS_超越死亡.mp4',
-                title: 'SS - 超越死亡',
-                description: '点击播放视频'
-            },
-            {
-                name: 'SS（逃脱）.mp4',
+                name: 'Mp4/逃脱.mp4',
                 title: 'SS - 逃脱',
-                description: '点击播放视频'
+                description: '点击播放视频',
+                thumbnail: '逃脱.jpg'
             },
             {
-                name: '三国SLG_弓箭发射.mp4',
-                title: '三国SLG - 弓箭发射',
-                description: '点击播放视频'
+                name: 'Mp4/卡坦岛.mp4',
+                title: 'SS - 卡坦岛',
+                description: '点击播放视频',
+                thumbnail: '卡坦岛.jpg'
             },
             {
-                name: '割草塔防干着急.mp4',
-                title: '割草塔防',
-                description: '点击播放视频'
+                name: 'Mp4/组中维护.mp4',
+                title: 'SS - 组中维护',
+                description: '点击播放视频',
+                thumbnail: '组中维护.jpg'
             },
             {
-                name: '圆台展示.mp4',
-                title: '圆台展示',
-                description: '点击播放视频'
+                name: 'Mp4/过超市.mp4',
+                title: 'SS - 过超市',
+                description: '点击播放视频',
+                thumbnail: '过超市.jpg'
             },
             {
-                name: '多木桶.mp4',
-                title: '多木桶',
-                description: '点击播放视频'
+                name: 'Mp4/敌对势力.mp4',
+                title: 'SS - 敌对势力',
+                description: '点击播放视频',
+                thumbnail: '敌对势力.jpg'
             },
             {
-                name: 'GOG_大富翁棋盘.mp4',
-                title: 'GOG - 大富翁棋盘',
-                description: '点击播放视频'
-            },
-            {
-                name: 'NM（修理）.mp4',
+                name: 'Mp4/修理.mp4',
                 title: 'NM - 修理',
-                description: '点击播放视频'
+                description: '点击播放视频',
+                thumbnail: '修理.jpg'
+            },
+            {
+                name: 'Mp4/大富翁棋盘.mp4',
+                title: 'GOG - 大富翁棋盘',
+                description: '点击播放视频',
+                thumbnail: '大富翁棋盘.jpg'
+            },
+            {
+                name: 'Mp4/环状港.mp4',
+                title: 'GOG - 环状港',
+                description: '点击播放视频',
+                thumbnail: '环状港.jpg'
+            },
+            {
+                name: 'Mp4/登岛.mp4',
+                title: 'GOG - 登岛',
+                description: '点击播放视频',
+                thumbnail: '登岛.jpg'
+            },
+            {
+                name: 'Mp4/割草塔防.mp4',
+                title: '割草塔防',
+                description: '点击播放视频',
+                thumbnail: '割草塔防.jpg'
             }
         ];
 
@@ -526,12 +554,24 @@
             const workItem = document.createElement('div');
             workItem.className = 'work-item';
             
+            const videoUrl = `${config.cdnBase}/${encodeURIComponent(video.name)}`;
+            const thumbnailUrl = `${config.thumbnailBase}/${encodeURIComponent(video.thumbnail)}`;
+            console.log('Creating video item for:', videoUrl);
+            
             workItem.innerHTML = `
-                <div class="work-video-container">
-                    <video class="work-video" 
-                           src="${config.cdnBase}/${video.name}"
-                           preload="metadata">
-                    </video>
+                <div class="work-video-container paused">
+                    <div class="video-placeholder" style="
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        background: #2c2c2e;
+                        background-image: url('${thumbnailUrl}');
+                        background-size: cover;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                    "></div>
                     <div class="play-button">
                         <i class="fas fa-play"></i>
                     </div>
@@ -544,7 +584,123 @@
                     <div class="work-description">${video.description}</div>
                 </div>
             `;
-            
+
+            const container = workItem.querySelector('.work-video-container');
+            const playButton = workItem.querySelector('.play-button');
+            const fullscreenButton = workItem.querySelector('.fullscreen-button');
+            let videoElement = null;
+
+            function createVideo() {
+                if (videoElement) return videoElement;
+                
+                videoElement = document.createElement('video');
+                videoElement.className = 'work-video';
+                videoElement.preload = 'none';
+                videoElement.crossOrigin = 'anonymous';
+                videoElement.setAttribute('playsinline', '');
+                videoElement.setAttribute('webkit-playsinline', '');
+                videoElement.setAttribute('x-webkit-airplay', 'allow');
+                videoElement.setAttribute('controlsList', 'nodownload');
+                videoElement.muted = true;
+                
+                // 移除占位符
+                const placeholder = container.querySelector('.video-placeholder');
+                if (placeholder) {
+                    placeholder.remove();
+                }
+                
+                // 插入视频元素
+                container.insertBefore(videoElement, container.firstChild);
+                
+                return videoElement;
+            }
+
+            function loadVideo() {
+                const video = createVideo();
+                if (!video.src) {
+                    video.src = videoUrl;
+                }
+                return video;
+            }
+
+            let retryCount = 0;
+            const maxRetries = 3;
+
+            function handleVideoError(e) {
+                console.error('Video error:', e.target.error);
+                if (retryCount < maxRetries) {
+                    retryCount++;
+                    console.log(`Retrying (${retryCount}/${maxRetries})...`);
+                    setTimeout(() => {
+                        const video = loadVideo();
+                        video.src = videoUrl;
+                    }, 1000 * retryCount);
+                } else {
+                    container.innerHTML = `
+                        <div style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 100%;
+                            color: #ff3b30;
+                            text-align: center;
+                            padding: 20px;
+                        ">
+                            <div>
+                                <i class="fas fa-exclamation-triangle" style="font-size: 24px; margin-bottom: 10px;"></i>
+                                <p style="font-size: 12px;">视频加载失败，请稍后重试</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            container.addEventListener('click', async (e) => {
+                if (e.target.closest('.fullscreen-button')) return;
+                
+                const video = loadVideo();
+                video.addEventListener('error', handleVideoError);
+
+                try {
+                    if (video.paused) {
+                        await video.play();
+                        container.classList.remove('paused');
+                        playButton.innerHTML = '<i class="fas fa-pause"></i>';
+                        video.muted = false;
+                    } else {
+                        video.pause();
+                        container.classList.add('paused');
+                        playButton.innerHTML = '<i class="fas fa-play"></i>';
+                    }
+                } catch (err) {
+                    console.error('Play failed:', err);
+                    // 尝试静音播放
+                    video.muted = true;
+                    try {
+                        await video.play();
+                        container.classList.remove('paused');
+                        playButton.innerHTML = '<i class="fas fa-pause"></i>';
+                    } catch (err) {
+                        console.error('Muted play failed:', err);
+                    }
+                }
+            });
+
+            fullscreenButton.addEventListener('click', async () => {
+                const video = loadVideo();
+                video.addEventListener('error', handleVideoError);
+                
+                if (!document.fullscreenElement) {
+                    try {
+                        await video.requestFullscreen();
+                    } catch (err) {
+                        console.error('Fullscreen failed:', err);
+                    }
+                } else {
+                    document.exitFullscreen();
+                }
+            });
+
             return workItem;
         }
 
@@ -555,10 +711,18 @@
                 const playButton = container.querySelector('.play-button');
                 const fullscreenButton = container.querySelector('.fullscreen-button');
 
+                if (!video) return; // 如果视频元素不存在，跳过初始化
+
                 // 播放/暂停控制
-                playButton.addEventListener('click', () => {
+                playButton?.addEventListener('click', () => {
                     if (video.paused) {
-                        video.play();
+                        video.muted = false; // 取消静音
+                        video.play().catch(err => {
+                            console.error('Play failed:', err);
+                            // 尝试使用静音播放
+                            video.muted = true;
+                            video.play().catch(err => console.error('Muted play failed:', err));
+                        });
                         playButton.innerHTML = '<i class="fas fa-pause"></i>';
                     } else {
                         video.pause();
