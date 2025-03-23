@@ -148,6 +148,8 @@
             width: 100%;
             box-sizing: border-box;
             text-align: left;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.6s forwards;
         }
 
         /* 添加新的布局样式 */
@@ -158,6 +160,7 @@
             margin-bottom: 16px;
             width: 100%;
             text-align: left;
+            will-change: transform;
         }
 
         .highlights-title {
@@ -208,6 +211,8 @@
             margin: 20px 0;
             padding: 0;
             width: 100%;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.5s forwards;
         }
 
         .social-link {
@@ -597,7 +602,7 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -688,6 +693,37 @@
 
         .highlights-content {
             text-align: left;
+        }
+
+        /* 学习日志动画 */
+        .highlights-section[style*="margin-top: 40px"] {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.8s forwards;
+        }
+
+        /* 确保动画在移动端也生效 */
+        @media (max-width: 768px) {
+            .social-links {
+                animation: fadeInUp 0.8s ease-out 0.5s forwards;
+            }
+
+            .highlights-section {
+                animation: fadeInUp 0.8s ease-out 0.6s forwards;
+            }
+
+            .highlights-section[style*="margin-top: 40px"] {
+                animation: fadeInUp 0.8s ease-out 0.8s forwards;
+            }
+        }
+
+        /* 确保动画不受设备性能影响 */
+        @media (prefers-reduced-motion: reduce) {
+            .social-links,
+            .highlights-section,
+            .highlights-section[style*="margin-top: 40px"] {
+                animation: none;
+                opacity: 1;
+            }
         }
     </style>
 </head>
