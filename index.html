@@ -23,6 +23,7 @@
         }
 
         .container {
+            width: 100%;
             max-width: 1800px;
             margin: 0 auto;
             text-align: center;
@@ -321,21 +322,72 @@
             
             .container {
                 padding: 10px 0;
+                width: 100%;
             }
 
+            /* 最外层大卡片 */
             .glass-card {
-                margin: 10px;
-                padding: 20px;
-                border-radius: 15px;
+                margin: 10px 5px;  /* 减小左右边距 */
+                padding: 15px 10px;  /* 减小内边距 */
+                width: calc(100% - 10px);  /* 计算宽度，留出最小边距 */
+                box-sizing: border-box;
             }
 
+            /* 内部卡片容器 */
             .highlights-section {
-                padding: 15px;
-                margin-bottom: 15px;
+                width: calc(100% - 10px);  /* 计算宽度，留出最小边距 */
+                margin: 10px 5px;  /* 减小边距 */
+                padding: 15px 10px;  /* 减小内边距 */
+                box-sizing: border-box;
             }
 
-            .highlights-container {
-                gap: 15px;
+            /* 经验卡片 */
+            .experience-card {
+                width: calc(100% - 10px);
+                margin: 10px 5px;
+                padding: 15px 10px;
+                box-sizing: border-box;
+            }
+
+            /* 学习日志卡片 */
+            .log-item {
+                width: calc(100% - 10px);
+                margin: 10px 5px;
+                padding: 12px 15px;
+                box-sizing: border-box;
+            }
+
+            /* 标题区域 */
+            .highlights-title {
+                padding: 0 5px;
+                margin-bottom: 15px;
+                font-size: 18px;
+            }
+
+            /* 内容区域 */
+            .highlights-content {
+                padding: 0 5px;
+            }
+
+            /* 确保所有内容都使用border-box */
+            * {
+                box-sizing: border-box;
+            }
+
+            /* 调整按钮容器 */
+            .action-buttons {
+                padding: 0 5px;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            /* 调整社交链接容器 */
+            .social-links {
+                padding: 0 5px;
+                width: 100%;
+                justify-content: center;
             }
 
             .log-item {
@@ -414,8 +466,18 @@
         /* 针对特小屏幕的额外优化 */
         @media (max-width: 360px) {
             .glass-card {
-                margin: 5px;
-                padding: 15px;
+                margin: 5px 3px;
+                padding: 12px 8px;
+            }
+
+            .highlights-section {
+                margin: 5px 3px;
+                padding: 12px 8px;
+            }
+
+            .log-item {
+                margin: 8px 3px;
+                padding: 10px 12px;
             }
 
             .name {
