@@ -325,38 +325,43 @@
         @media (max-width: 768px) {
             body {
                 padding: 0;
+                margin: 0;
+                width: 100%;
+                overflow-x: hidden;  /* 防止水平滚动 */
             }
             
             .container {
                 padding: 0;
                 width: 100%;
                 margin: 0;
+                overflow-x: hidden;  /* 防止水平滚动 */
             }
 
             /* 最外层大卡片 */
             .glass-card {
-                margin: 10px 0;
+                margin: 0;  /* 移除所有边距 */
                 padding: 15px;
-                width: 100vw;
-                max-width: 100vw;
+                width: 100%;  /* 使用百分比宽度 */
+                max-width: none;  /* 移除最大宽度限制 */
                 box-sizing: border-box;
-                position: relative;
-                left: 50%;
-                transform: translateX(-50%);
+                position: static;  /* 移除定位 */
+                transform: none;  /* 移除变换 */
+                border-radius: 0;  /* 移除圆角 */
             }
 
             /* 内部卡片容器 */
             .highlights-section {
-                width: calc(100% + 20px);
-                margin: 10px -10px;
+                width: 100%;
+                margin: 10px 0;
                 padding: 20px;
                 box-sizing: border-box;
+                border-radius: 16px;
             }
 
             /* 学习日志卡片 */
             .highlights-section[style*="margin-top: 40px"] {
-                width: calc(100% + 20px);
-                margin: 40px -10px 0;
+                width: 100%;
+                margin: 40px 0 0;
                 padding: 20px;
             }
 
