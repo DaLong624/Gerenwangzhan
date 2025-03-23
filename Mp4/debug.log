@@ -1,5 +1,0 @@
-[2025/03/22 02:04:15:INFO:DingTalk.cpp(340)] 1. check env: release
-[2025/03/22 02:04:15:INFO:DingTalk.cpp(618)] sDumpFilePreFix: dingtalk-cef_audio_7.6.45-Release.250211009_1178524430@dingding_windows_
-[2025/03/22 02:04:15:INFO:DingTalk.cpp(662)] [cef_sandbox] RenderStartup has sandbox_info param 
-[15824:18540:0322/020415.725:12139546:ERROR:cef_web_view_custom_scheme_common.cc(29)] [renderer]::RegisterCustomSchemes, not find custom scheme.
-[15824:31096:0322/020430.515:12154343:WARNING:sync_reader.cc(274)] ASR: No room in socket buffer.: 管道正在被关闭。 (0xE8)
