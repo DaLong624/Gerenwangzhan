@@ -28,7 +28,7 @@
 
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 1400px;  /* 增加默认最大宽度 */
             margin: 0 auto;
             padding: 0;
         }
@@ -42,7 +42,7 @@
             padding: 40px;
             margin: 0 auto;
             width: 100%;
-            max-width: 800px;
+            max-width: 1400px;  /* 增加默认最大宽度 */
             box-sizing: border-box;
             text-align: center;
         }
@@ -354,29 +354,30 @@
 
         /* 桌面端样式 */
         @media (min-width: 769px) {
+            body {
+                padding: 20px;
+            }
+
             .container {
                 padding: 20px;
-                max-width: 1200px;
-                margin: 0 auto;
             }
 
             .glass-card {
                 margin: 20px auto;
-                padding: 40px;
-                border-radius: 20px;
+                padding: 40px 60px;  /* 增加左右内边距 */
             }
 
             /* 桌面端经验卡片横向排列 */
             .highlights-container {
-                flex-direction: row;  /* 横向排列 */
-                gap: 20px;
+                flex-direction: row;
+                gap: 40px;  /* 增加卡片之间的间距 */
                 justify-content: space-between;
             }
 
             /* 确保每个卡片占据相等宽度 */
             .highlights-section {
                 flex: 1;
-                min-width: 0;  /* 防止内容溢出 */
+                min-width: 0;
             }
         }
 
