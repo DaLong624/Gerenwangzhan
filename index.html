@@ -200,6 +200,13 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
             transition: all 0.3s ease;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .social-link i {
+            color: #fff;
+            font-size: 20px;
         }
 
         .social-link:hover {
@@ -328,18 +335,29 @@
 
             /* 最外层大卡片 */
             .glass-card {
-                margin: 10px 0;  /* 移除左右边距 */
-                padding: 15px 10px;
-                width: 100%;  /* 占满整个宽度 */
+                margin: 10px 0;
+                padding: 15px;
+                width: 100vw;
+                max-width: 100vw;
                 box-sizing: border-box;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
             }
 
             /* 内部卡片容器 */
             .highlights-section {
-                width: 100%;  /* 占满整个宽度 */
-                margin: 10px 0;  /* 移除左右边距 */
-                padding: 15px;
+                width: calc(100% + 20px);
+                margin: 10px -10px;
+                padding: 20px;
                 box-sizing: border-box;
+            }
+
+            /* 学习日志卡片 */
+            .highlights-section[style*="margin-top: 40px"] {
+                width: calc(100% + 20px);
+                margin: 40px -10px 0;
+                padding: 20px;
             }
 
             /* 经验卡片 */
@@ -427,8 +445,11 @@
             }
 
             .social-link {
-                width: 40px;
-                height: 40px;
+                color: #fff;
+            }
+
+            .social-link i {
+                color: #fff;
             }
 
             .name {
