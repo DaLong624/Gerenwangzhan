@@ -28,7 +28,7 @@
 
         .container {
             width: 100%;
-            max-width: 1400px;  /* 增加默认最大宽度 */
+            max-width: 1800px;  /* 进一步增加最大宽度 */
             margin: 0 auto;
             padding: 0;
         }
@@ -42,7 +42,7 @@
             padding: 40px;
             margin: 0 auto;
             width: 100%;
-            max-width: 1400px;  /* 增加默认最大宽度 */
+            max-width: 1800px;  /* 进一步增加最大宽度 */
             box-sizing: border-box;
             text-align: center;
         }
@@ -364,20 +364,22 @@
 
             .glass-card {
                 margin: 20px auto;
-                padding: 40px 60px;  /* 增加左右内边距 */
+                padding: 40px 100px;  /* 增加左右内边距 */
             }
 
             /* 桌面端经验卡片横向排列 */
             .highlights-container {
                 flex-direction: row;
-                gap: 40px;  /* 增加卡片之间的间距 */
+                gap: 60px;  /* 增加卡片之间的间距 */
                 justify-content: space-between;
+                margin: 30px 0;  /* 增加上下间距 */
             }
 
             /* 确保每个卡片占据相等宽度 */
             .highlights-section {
                 flex: 1;
                 min-width: 0;
+                padding: 30px;  /* 增加内部卡片的内边距 */
             }
         }
 
