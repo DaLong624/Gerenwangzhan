@@ -1,0 +1,100 @@
+From c6e906ff05e5853126ade592fb5e5838b77174ae Mon Sep 17 00:00:00 2001
+From: DaLong624 <your.email@example.com>
+Date: Sat, 29 Mar 2025 22:06:43 +0800
+Subject: [PATCH] =?UTF-8?q?=E6=96=B0=E5=A2=9E=EF=BC=9A=E7=AE=80=E5=8E=86?=
+ =?UTF-8?q?=E9=A2=84=E8=A7=88=E9=A1=B5=E9=9D=A2=E6=B7=BB=E5=8A=A0=E8=BF=94?=
+ =?UTF-8?q?=E5=9B=9E=E6=8C=89=E9=92=AE?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ index.html | 51 ++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 48 insertions(+), 3 deletions(-)
+
+diff --git a/index.html b/index.html
+index d3d5ccb..da43cb8 100644
+--- a/index.html
++++ b/index.html
+@@ -754,6 +754,31 @@
+             color: #fff;
+         }
+ 
++        .resume-actions {
++            display: flex;
++            gap: 10px;
++            align-items: center;
++        }
++
++        .back-button {
++            padding: 8px 16px;
++            border-radius: 8px;
++            background: #333;
++            color: #fff;
++            border: none;
++            font-size: 14px;
++            display: flex;
++            align-items: center;
++            gap: 8px;
++            cursor: pointer;
++            transition: all 0.3s ease;
++        }
++
++        .back-button:hover {
++            background: #444;
++            transform: translateY(-2px);
++        }
++
+         .download-resume-btn {
+             padding: 8px 16px;
+             border-radius: 8px;
+@@ -796,6 +821,15 @@
+             color: #000;
+         }
+ 
++        body.light-theme .back-button {
++            background: #666;
++            color: #fff;
++        }
++
++        body.light-theme .back-button:hover {
++            background: #777;
++        }
++
+         /* 移动端简历预览样式调整 */
+         @media (max-width: 768px) {
+             .resume-modal-content {
+@@ -811,6 +845,12 @@
+                 margin-bottom: 5px;
+             }
+ 
++            .resume-actions {
++                width: 100%;
++                justify-content: space-between;
++                margin-top: 5px;
++            }
++
+             .resume-preview {
+                 height: calc(100% - 60px);
+             }
+@@ -1031,9 +1071,14 @@
+             <button class="close-modal" onclick="closeResumeModal()">&times;</button>
+             <div class="resume-header">
+                 <h3>我的简历</h3>
+-                <a href="孙金龙简历.pdf" download="孙金龙简历.pdf" class="download-resume-btn">
+-                    <i class="fas fa-download"></i> 下载简历
+-                </a>
++                <div class="resume-actions">
++                    <button class="back-button" onclick="closeResumeModal()">
++                        <i class="fas fa-arrow-left"></i> 返回
++                    </button>
++                    <a href="孙金龙简历.pdf" download="孙金龙简历.pdf" class="download-resume-btn">
++                        <i class="fas fa-download"></i> 下载简历
++                    </a>
++                </div>
+             </div>
+             <div class="resume-preview">
+                 <iframe id="resumeFrame" src="" width="100%" height="500px"></iframe>
+-- 
+2.49.0.windows.1
+
