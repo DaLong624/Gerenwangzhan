@@ -237,9 +237,9 @@
             }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .video-grid {
-                grid-template-columns: repeat(1, 1fr);
+                grid-template-columns: 1fr;
                 gap: 25px;
             }
 
@@ -257,6 +257,7 @@
             
             .container {
                 padding: 0 15px;
+                max-width: 100%;
             }
             
             .works-section {
@@ -567,6 +568,26 @@
                 align-items: flex-start;
             }
         }
+
+        /* 强制在移动设备上使用单列布局 */
+        @media screen and (max-width: 900px) {
+            .video-grid {
+                display: flex !important;
+                flex-direction: column !important;
+                width: 100% !important;
+            }
+            
+            .video-item {
+                width: 100% !important;
+                margin-bottom: 25px !important;
+            }
+        }
+        
+        /* 处理图片加载错误的样式 */
+        .fallback-bg {
+            background-color: #1a1a1a !important;
+            background-image: none !important;
+        }
     </style>
 </head>
 <body>
@@ -837,6 +858,23 @@
     </div>
 
     <script>
+        // 监听所有图片加载错误，防止控制台报错
+        window.addEventListener('error', function(e) {
+            // 检查是否为图片加载错误
+            if (e.target.tagName === 'IMG' || e.target.style && e.target.style.backgroundImage) {
+                // 阻止错误传播到控制台
+                e.stopPropagation();
+                e.preventDefault();
+                
+                // 如果是背景图像，应用fallback样式
+                if (e.target.style && e.target.style.backgroundImage) {
+                    e.target.classList.add('fallback-bg');
+                }
+                
+                return true;
+            }
+        }, true);
+        
         // 主题切换功能
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = themeToggle.querySelector('i');
@@ -878,8 +916,9 @@
                     // 创建一个临时图像对象来测试缩略图是否存在
                     const img = new Image();
                     img.onerror = function() {
-                        // 缩略图加载失败时，移除背景图样式，使用默认背景
+                        // 缩略图加载失败时，移除背景图样式，使用纯色背景
                         thumbnail.style.backgroundImage = 'none';
+                        thumbnail.style.backgroundColor = '#1a1a1a';
                         
                         // 尝试从视频中提取缩略图
                         // 获取视频URL
