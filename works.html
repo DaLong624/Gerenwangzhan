@@ -239,12 +239,12 @@
 
         @media (max-width: 768px) {
             .video-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
+                grid-template-columns: repeat(1, 1fr);
+                gap: 25px;
             }
 
             .video-thumbnail {
-                height: 180px;
+                height: 240px;
             }
             
             .video-info {
@@ -252,17 +252,42 @@
             }
             
             .video-title {
-                font-size: 16px;
+                font-size: 18px;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            .works-section {
+                padding: 20px;
             }
         }
 
         @media (max-width: 480px) {
             .video-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
 
             .video-thumbnail {
-                height: 220px;
+                height: 200px;
+            }
+            
+            .video-info {
+                padding: 12px;
+            }
+            
+            .video-title {
+                font-size: 16px;
+            }
+            
+            .proxy-notice {
+                padding: 10px 15px;
+            }
+            
+            .proxy-notice-text {
+                font-size: 14px;
             }
         }
 
