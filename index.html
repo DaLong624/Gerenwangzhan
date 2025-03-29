@@ -728,12 +728,13 @@
 
         /* 简历预览弹窗样式 */
         .resume-modal-content {
-            max-width: 95%;
-            width: 95%;
+            max-width: 750px;
+            width: 90%;
             height: 95vh;
             padding: 20px;
             background: #1c1c1e;
             border-radius: 16px;
+            overflow: hidden;
         }
 
         .resume-header {
@@ -789,6 +790,26 @@
 
         body.light-theme .resume-header h3 {
             color: #000;
+        }
+
+        /* 移动端简历预览样式调整 */
+        @media (max-width: 768px) {
+            .resume-modal-content {
+                width: 95%;
+                height: 80vh;
+                padding: 15px;
+            }
+
+            .resume-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+
+            .resume-preview {
+                height: calc(100% - 70px);
+            }
         }
     </style>
 </head>
