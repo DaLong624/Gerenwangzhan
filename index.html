@@ -754,6 +754,31 @@
             color: #fff;
         }
 
+        .resume-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .back-button {
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: #333;
+            color: #fff;
+            border: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #444;
+            transform: translateY(-2px);
+        }
+
         .download-resume-btn {
             padding: 8px 16px;
             border-radius: 8px;
@@ -796,6 +821,15 @@
             color: #000;
         }
 
+        body.light-theme .back-button {
+            background: #666;
+            color: #fff;
+        }
+
+        body.light-theme .back-button:hover {
+            background: #777;
+        }
+
         /* 移动端简历预览样式调整 */
         @media (max-width: 768px) {
             .resume-modal-content {
@@ -809,6 +843,12 @@
                 align-items: flex-start;
                 gap: 5px;
                 margin-bottom: 5px;
+            }
+
+            .resume-actions {
+                width: 100%;
+                justify-content: space-between;
+                margin-top: 5px;
             }
 
             .resume-preview {
@@ -1031,9 +1071,14 @@
             <button class="close-modal" onclick="closeResumeModal()">&times;</button>
             <div class="resume-header">
                 <h3>我的简历</h3>
-                <a href="孙金龙简历.pdf" download="孙金龙简历.pdf" class="download-resume-btn">
-                    <i class="fas fa-download"></i> 下载简历
-                </a>
+                <div class="resume-actions">
+                    <button class="back-button" onclick="closeResumeModal()">
+                        <i class="fas fa-arrow-left"></i> 返回
+                    </button>
+                    <a href="孙金龙简历.pdf" download="孙金龙简历.pdf" class="download-resume-btn">
+                        <i class="fas fa-download"></i> 下载简历
+                    </a>
+                </div>
             </div>
             <div class="resume-preview">
                 <iframe id="resumeFrame" src="" width="100%" height="500px"></iframe>
