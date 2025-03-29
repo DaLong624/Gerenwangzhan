@@ -496,12 +496,16 @@
         }
 
         body.light-theme .social-link {
-            background: #ffffff;
-            color: #000;
+            background: rgba(0, 0, 0, 0.05);
+            color: #333;
+        }
+
+        body.light-theme .social-link i {
+            color: #333;
         }
 
         body.light-theme .social-link:hover {
-            background: #f0f0f0;
+            background: rgba(0, 0, 0, 0.1);
         }
 
         body.light-theme .name {
@@ -796,19 +800,19 @@
         @media (max-width: 768px) {
             .resume-modal-content {
                 width: 95%;
-                height: 80vh;
-                padding: 15px;
+                height: 90vh;
+                padding: 10px;
             }
 
             .resume-header {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 10px;
-                margin-bottom: 15px;
+                gap: 5px;
+                margin-bottom: 5px;
             }
 
             .resume-preview {
-                height: calc(100% - 70px);
+                height: calc(100% - 60px);
             }
         }
     </style>
